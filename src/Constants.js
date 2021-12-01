@@ -1,0 +1,50 @@
+//Admin roles
+export const SUPER_ADMIN = 1;
+export const ADMIN = 2;
+
+//notifications typs
+export const RECLATION = "Reclamation";
+export const MESSAGE = "message";
+
+//End points
+export const ADD_ADMIN = "/admin/addAdmin"
+export const ADD_CHILD = "/admin/addChildren"
+export const GET_PARENTS_FORMS = "/admin/getParents" 
+export const GET_CLASSES_FORMS = "/admin/getClasses"
+export const GET_SUBJECTS_FORMS = "/admin/getSubjects"
+export const ADD_CLASSE = "/admin/addClasse"
+export const ADD_EVENT = "/admin/addEvent"
+export const ADD_SUBJECT = "/admin/addSubject"
+export const ADD_TEACHER = "/admin/addTeacher"
+export const DELETE_ADMIN = "/admin/deleteAdmin/"
+export const DELETE_CHILD = "/admin/deleteChildren/"
+export const DELETE_CLASSE = "/admin/deleteClasse/"
+export const GET_EVENTS = "/admin/getAllEvents"
+export const DELETE_EVENT = "/admin/deleteEvent/"
+export const DELETE_PARENT = "/admin/deleteParent/"
+export const DELETE_SUBJECT = "/admin/deleteSubject/"
+export const GET_TEACHERS = "/admin/getAllTeachers"
+export const DELETE_TEACHER = "/admin/deleteTeacher/"
+export const UPDATE_ADMIN = "/admin/updateAdmin/"
+export const UPDATE_CHILD = "/admin/updateChildren/"
+export const UPDATE_PARENT = "/admin/updateParent/"
+export const SEND_MESSAGE = "/admin/addMessage"
+export const CHANGE_PASSWORD = "/admin/changePasword/"
+export const GET_ALL_CHILDRENS = "/admin/getAllChildrens"
+export const CLAIM_ANSWER = "/admin/answerClaim/"
+export const ADD_PARENT = "/admin/addParent"
+export const GET_MESSAGES = "/admin/getMessages/"
+export const SAVE_TOKEN = "/admin/saveToken/"
+export const GET_CLAIMS = "/admin/getAllClaims"
+export const GET_ADMINS = "/admin/getAllAdmins"
+export const GET_PRENTS = "/admin/getAllParents"
+export const GET_SUBJECTS = "/admin/getAllSubjects"
+export const GET_CLASSES = "/admin/getAllClasses"
+export const ADMINS_NUMBER = "/admin/adminsNumber"
+export const PARENTS_NUMBER = "/admin/parentsNumber"
+export const CHILDRENS_NUMBER = "/admin/childrensNumber"
+export const TEACHERS_NUMBER = "/admin/teachersNumber"
+export const PARENTS_MEN_NUMBER = "/admin/parentsMenNumber"
+export const PARENTS_WOMEN_NUMBER = "/admin/parentsWomenNumber"
+export const TEACHER_MEN_NUMBER = "admin/techersMenNumber"
+export const TEACHER_WOMEN_NUMBER = "admin/teachersWomenNumber"

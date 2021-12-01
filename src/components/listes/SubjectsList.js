@@ -1,0 +1,156 @@
+import React,{useState,useEffect} from "react";
+import Pagination from "react-js-pagination";
+import swal from "sweetalert";
+import { Spinner } from "react-bootstrap";
+import {getAllSubjects,deleteSubject} from '../../tools/api'
+
+
+function SubjectsList() {
+  const [subjects,setSubjects] = useState([]);
+  const [loding,setLoding] = useState(false);
+  const [find, setFind] = useState();
+
+  const handelFindChange = (e) => {
+    setFind(e.target.value);
+    setLoding(true);
+    setTimeout(() => {
+      setLoding(false);
+    }, 500);
+  };
+  const exist = (s1) =>
+    !find || s1?.toLocaleLowerCase().indexOf(find?.toLocaleLowerCase()) >= 0;
+
+  const getSubjects = (nbPage) =>{
+    setLoding(true);
+    getAllSubjects(nbPage)
+    .then((response) => {
+      setSubjects(response.data.data);
+      setLoding(false)
+    })
+    .catch((error) => {
+      setLoding(false)
+      console.log(error);
+    });
+}
+useEffect((nbPage)=>{getSubjects(nbPage)},[])
+  const onDelete = (id) => {
+    swal({
+      title: "vous êtes sûr ?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+       deleteSubject(id)
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.success === true) {
+              swal("matière supprimer", {
+                icon: "success",
+              });
+              getSubjects();
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
+  return (
+    <div>
+        <input
+        type="text"
+        className="form-control col-lg-6 mb-2 ml-2"
+        placeholder="Trouver matières"
+        value={find}
+        onChange={handelFindChange}
+      />
+      <div className="card ">
+        <div>
+          <div className="card-header">
+            <h3 className="card-title">Liste des matières</h3>
+          </div>
+          
+          <div className="card-body">
+          <div className="table-responsive">
+            <table
+              id="example2"
+              className="table table-responsive-md  "
+            >
+              <thead>
+                <tr
+                  style={{
+                    border: "none",
+                    width: "40px",
+                    padding: "2px 2px 2px2 px",
+                  }}
+                >
+                  <th>code</th>
+                  <th>Nom de matières</th>
+                  <th>heures</th>
+                  <th >
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              {loding ?
+              <tbody style={{height:"100px"}}>
+           <Spinner animation="border" variant="primary" size={100} style={{position: "absolute", top: "50%", left: "50%"}}/>
+           </tbody>:
+              <tbody>
+                {subjects?.data
+                ?.filter((u) => exist(JSON.stringify(u)))
+                .map((subject, i) => (
+                  <tr key={i}>
+                     <td>{subject.code}</td>
+                    <td>{subject.name}</td>
+                    <td>{subject.hours_week}</td>
+                    <td>
+                    <div class="d-flex">
+                      <a
+                        className="dropdown-item"
+                        onClick={(event) => {
+                          onDelete(subject.id);
+                        }}
+                        class="btn btn-primary shadow btn-xs sharp mr-1"
+                      >
+                        <i
+                          className="fa fa-trash"
+                          style={{ color: "#fff" }}
+                        ></i>
+                         
+                      </a>
+                      <a
+                                
+                                className="btn btn-danger shadow btn-xs sharp"
+                              >
+                                <i
+                                  className="fa fa-pencil"
+                                  style={{ color: "#fff" }}
+                                ></i>
+                              </a>
+                    </div>
+                  </td>
+                  </tr>
+                ))}
+              </tbody>}
+            </table>
+            </div>
+            <Pagination
+              activePage={subjects?.current_page}
+              itemsCountPerPage={subjects?.per_page}
+              totalItemsCount={subjects?.total}
+              onChange={(pageNumber)=>{getSubjects(pageNumber)}}
+              itemClass="page-item"
+              linkClass="page-link"
+              firstPageText="Début"
+              lastPageText="Fin"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+export default SubjectsList;
